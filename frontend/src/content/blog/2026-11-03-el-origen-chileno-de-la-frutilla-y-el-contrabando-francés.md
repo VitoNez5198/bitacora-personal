@@ -3,7 +3,7 @@ title: "El origen chileno de la frutilla y el contrabando francés"
 description: "La historia de espionaje y contrabando detrás del origen de la frutilla grande moderna."
 publishDate: 2026-11-03
 tags: ["historia", "botanica", "agricultura", "chile"]
-topic: "general"
+topic: "historia"
 draft: false
 ---
 

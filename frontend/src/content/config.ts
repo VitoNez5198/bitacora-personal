@@ -18,7 +18,17 @@ const blogCollection = defineCollection({
     publishDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
-    topic: z.enum(['tecnología', 'tecno-política', 'gaming', 'hardware', 'general']).default('general'),
+    topic: z.enum([
+      'ciencia',
+      'historia',
+      'naturaleza',
+      'sociedad',
+      'tecnología',
+      'tecno-política',
+      'gaming',
+      'cultura',
+      'general'
+    ]).default('general'),
     draft: z.boolean().default(false),
   }),
 });

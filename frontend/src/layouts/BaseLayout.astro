@@ -5,7 +5,7 @@ interface Props {
   currentPath?: string;
 }
 
-const { title, description = "Bitácora técnica y jardín digital", currentPath = "/" } = Astro.props;
+const { title, description = "Bitácora de divulgación, curiosidades y descubrimientos", currentPath = "/" } = Astro.props;
 
 const navItems = [
   { href: "/", label: "~/stream", description: "TIL & notas rápidas" },
@@ -67,7 +67,7 @@ const navItems = [
       <div class="max-w-4xl mx-auto px-3 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
         <div class="flex items-center gap-2">
           <span class="text-syntax-accent font-semibold">[NOMINAL]</span>
-          <span>bitácora técnica personal</span>
+          <span>bitácora de divulgación y curiosidades</span>
           <span>•</span>
           <span>astro + fastapi</span>
         </div>
