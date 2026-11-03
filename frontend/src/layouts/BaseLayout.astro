@@ -1,0 +1,82 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const { title, description = "Bitácora técnica y jardín digital", currentPath = "/" } = Astro.props;
+
+const navItems = [
+  { href: "/", label: "~/stream", description: "TIL & notas rápidas" },
+  { href: "/blog", label: "~/blog", description: "Ensayos & reflexiones" },
+  { href: "/lab", label: "~/lab", description: "Proyectos & experimentos" },
+  { href: "/hobbies", label: "~/hobbies", description: "Gaming & coleccionismo" },
+];
+---
+
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} | logbook</title>
+  </head>
+  <body class="min-h-screen flex flex-col bg-carbon-900 text-syntax-text font-sans antialiased">
+    
+    <!-- Header tipo terminal / topbar de ingeniería -->
+    <header class="border-b border-carbon-700/70 bg-carbon-900/90 backdrop-blur sticky top-0 z-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+        
+        <!-- Identificador tipo shell -->
+        <a href="/" class="flex items-center gap-2 group text-xs font-mono text-syntax-muted hover:text-syntax-text transition-colors">
+          <span class="inline-block w-2 h-2 rounded-full bg-syntax-accent animate-pulse"></span>
+          <span class="text-syntax-subtle font-mono">user@garden:</span>
+          <span class="text-syntax-accent group-hover:underline">~{currentPath !== "/" ? currentPath : ""}</span>
+        </a>
+
+        <!-- Navegación modular minimalista -->
+        <nav class="flex items-center gap-1 sm:gap-2">
+          {navItems.map((item) => {
+            const isActive = currentPath === item.href || (item.href !== "/" && currentPath.startsWith(item.href));
+            return (
+              <a
+                href={item.href}
+                class={`px-2.5 py-1 text-xs font-mono rounded transition-colors ${
+                  isActive
+                    ? "bg-carbon-800 text-syntax-accent border border-carbon-700"
+                    : "text-syntax-muted hover:text-syntax-text hover:bg-carbon-850"
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+    </header>
+
+    <!-- Contenedor central -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      <slot />
+    </main>
+
+    <!-- Footer técnico y sobrio -->
+    <footer class="border-t border-carbon-700/50 py-6 text-xs font-mono text-syntax-subtle bg-carbon-950/60">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div class="flex items-center gap-2">
+          <span class="text-syntax-accent font-semibold">[NOMINAL]</span>
+          <span>bitácora técnica personal</span>
+          <span>•</span>
+          <span>astro + fastapi</span>
+        </div>
+        <div>
+          <span>jardín digital &copy; {new Date().getFullYear()}</span>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
+

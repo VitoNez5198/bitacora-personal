@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0a0c10;
+    color: #e6edf3;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Selección de texto sobria */
+  ::selection {
+    background-color: #212631;
+    color: #3fb950;
+  }
+
+  /* Scrollbar sobrio */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0c10;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #212631;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #30363d;
+  }
+}
+
+/* Tipografía de contenido técnico */
+.prose-garden {
+  color: #e6edf3;
+  max-width: 68ch;
+}
+
+.prose-garden h1,
+.prose-garden h2,
+.prose-garden h3 {
+  color: #f0f6fc;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.prose-garden p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  color: #c9d1d9;
+}
+
+.prose-garden a {
+  color: #3fb950;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #238636;
+  transition: color 0.15s ease;
+}
+
+.prose-garden a:hover {
+  color: #56d364;
+}
+
+.prose-garden code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875em;
+  background-color: #151921;
+  border: 1px solid #212631;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  color: #79c0ff;
+}
+
+.prose-garden pre {
+  background-color: #0d1117 !important;
+  border: 1px solid #212631;
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.prose-garden pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+

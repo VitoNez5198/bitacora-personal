@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import '../../styles/global.css';
+
+const labEntries = await getCollection('lab');
+const sortedLab = labEntries.sort(
+  (a, b) => b.data.updatedDate.getTime() - a.data.updatedDate.getTime()
+);
+
+const statusColorMap = {
+  active: 'text-syntax-accent border-syntax-accent/40 bg-syntax-accent/10',
+  wip: 'text-syntax-warning border-syntax-warning/40 bg-syntax-warning/10',
+  prototype: 'text-syntax-info border-syntax-info/40 bg-syntax-info/10',
+  archived: 'text-syntax-subtle border-syntax-subtle/40 bg-carbon-800',
+};
+---
+
+<BaseLayout title="Laboratorio" currentPath="/lab">
+  <section class="mb-10 pb-6 border-b border-carbon-700/60">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-xs font-mono text-syntax-warning font-semibold">[LAB // EXPERIMENTS]</span>
+      <span class="text-xs font-mono text-syntax-muted">/root/lab</span>
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-syntax-text">
+      Proyectos, scripts y experimentos
+    </h1>
+    <p class="mt-2 text-sm text-syntax-muted max-w-2xl font-normal leading-relaxed">
+      Caja de arena técnica para prototipos, herramientas CLI, pruebas de concepto y bibliotecas de código abierto en desarrollo.
+    </p>
+  </section>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {sortedLab.map((item) => (
+      <article class="p-5 rounded-md border border-carbon-700 bg-carbon-850/50 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <h2 class="text-base font-semibold text-syntax-text">
+              {item.data.title}
+            </h2>
+            <span class={`text-[11px] font-mono px-2 py-0.5 rounded border ${statusColorMap[item.data.status]}`}>
+              [{item.data.status.toUpperCase()}]
+            </span>
+          </div>
+          <p class="text-sm text-syntax-muted mb-4">
+            {item.data.description}
+          </p>
+        </div>
+
+        <div>
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            {item.data.stack.map((tech) => (
+              <span class="text-[11px] font-mono px-1.5 py-0.5 rounded bg-carbon-800 text-syntax-muted border border-carbon-700">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <div class="flex items-center gap-3 text-xs font-mono pt-3 border-t border-carbon-700/40 text-syntax-muted">
+            {item.data.repoUrl && (
+              <a href={item.data.repoUrl} target="_blank" rel="noopener noreferrer" class="hover:text-syntax-text underline">
+                git_repo &rarr;
+              </a>
+            )}
+            {item.data.demoUrl && (
+              <a href={item.data.demoUrl} target="_blank" rel="noopener noreferrer" class="hover:text-syntax-text underline">
+                live_demo &rarr;
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+
+    {sortedLab.length === 0 && (
+      <div class="col-span-full p-8 text-center border border-dashed border-carbon-700 rounded-md font-mono text-xs text-syntax-muted">
+        [!] No hay experimentos registrados en <code>src/content/lab/</code> aún.
+      </div>
+    )}
+  </div>
+</BaseLayout>
+

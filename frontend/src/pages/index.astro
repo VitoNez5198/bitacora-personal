@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+const tilEntries = await getCollection('til');
+const sortedEntries = tilEntries.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+---
+
+<BaseLayout title="Stream & TIL" currentPath="/">
+  <!-- Encabezado de sección tipo log -->
+  <section class="mb-10 pb-6 border-b border-carbon-700/60">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-xs font-mono text-syntax-accent font-semibold">[STREAM // TIL]</span>
+      <span class="text-xs font-mono text-syntax-muted">/root/feed</span>
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-syntax-text">
+      Notas rápidas, TIL y descubrimientos técnicos
+    </h1>
+    <p class="mt-2 text-sm text-syntax-muted max-w-2xl font-normal leading-relaxed">
+      Un flujo cronológico de aprendizajes del día a día, soluciones a problemas de ingeniería y fragmentos de código sin fricción editorial.
+    </p>
+  </section>
+
+  <!-- Lista cronológica del Stream -->
+  <div class="space-y-6">
+    {sortedEntries.map(async (entry) => {
+      const { Content } = await entry.render();
+      const formattedDate = entry.data.publishDate.toISOString().split('T')[0];
+      return (
+        <article class="p-5 rounded-md border border-carbon-700 bg-carbon-850/60 hover:border-carbon-600 transition-colors">
+          <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b border-carbon-700/40">
+            <h2 class="text-base font-semibold text-syntax-text">
+              {entry.data.title}
+            </h2>
+            <div class="flex items-center gap-3 text-xs font-mono text-syntax-muted">
+              <time datetime={entry.data.publishDate.toISOString()}>
+                {formattedDate}
+              </time>
+            </div>
+          </header>
+
+          <div class="prose-garden text-sm">
+            <Content />
+          </div>
+
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <footer class="mt-4 pt-3 flex flex-wrap gap-1.5 border-t border-carbon-700/30">
+              {entry.data.tags.map((tag) => (
+                <span class="px-2 py-0.5 text-xs font-mono rounded bg-carbon-800 text-syntax-muted border border-carbon-700/50">
+                  #{tag}
+                </span>
+              ))}
+            </footer>
+          )}
+        </article>
+      );
+    })}
+
+    {sortedEntries.length === 0 && (
+      <div class="p-8 text-center border border-dashed border-carbon-700 rounded-md font-mono text-xs text-syntax-muted">
+        [!] No hay entradas registradas aún. El backend de ingesta o un nuevo archivo en src/content/til/ creará una.
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
