@@ -43,6 +43,14 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #30363d;
   }
+  /* Utilidad para ocultar barra de scroll en navegación móvil */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Tipografía de contenido técnico */
@@ -51,18 +59,38 @@
   max-width: 68ch;
 }
 
-.prose-garden h1,
-.prose-garden h2,
-.prose-garden h3 {
+.prose-garden h1 {
+  font-size: clamp(1.4rem, 4vw, 2rem);
   color: #f0f6fc;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.prose-garden h2 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: #f0f6fc;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 1.75em;
+  margin-bottom: 0.75em;
+}
+
+.prose-garden h3 {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: #f0f6fc;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 .prose-garden p {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
+  margin-top: 1.15em;
+  margin-bottom: 1.15em;
   color: #c9d1d9;
+  font-size: 0.95rem;
+  line-height: 1.65;
 }
 
 .prose-garden a {
@@ -79,22 +107,27 @@
 
 .prose-garden code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.875em;
+  font-size: 0.85em;
   background-color: #151921;
   border: 1px solid #212631;
   padding: 0.15em 0.35em;
   border-radius: 3px;
   color: #79c0ff;
+  word-break: break-word;
 }
 
 .prose-garden pre {
   background-color: #0d1117 !important;
   border: 1px solid #212631;
   border-radius: 4px;
-  padding: 1rem;
+  padding: 0.85rem 1rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
+  font-size: 0.825rem;
 }
 
 .prose-garden pre code {

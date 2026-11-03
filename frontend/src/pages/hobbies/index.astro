@@ -27,7 +27,7 @@ const sortedHobbies = hobbiesEntries.sort(
     {sortedHobbies.map((item) => {
       const formattedDate = item.data.date.toISOString().split('T')[0];
       return (
-        <article class="p-5 rounded-md border border-carbon-700 bg-carbon-850/40 hover:border-carbon-600 transition-colors">
+        <article class="p-4 sm:p-5 rounded-md border border-carbon-700 bg-carbon-850/40 hover:border-carbon-600 transition-colors">
           <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
             <h2 class="text-base font-semibold text-syntax-text">
               {item.data.title}

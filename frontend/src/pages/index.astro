@@ -30,7 +30,7 @@ const sortedEntries = tilEntries.sort(
       const { Content } = await entry.render();
       const formattedDate = entry.data.publishDate.toISOString().split('T')[0];
       return (
-        <article class="p-5 rounded-md border border-carbon-700 bg-carbon-850/60 hover:border-carbon-600 transition-colors">
+        <article class="p-4 sm:p-5 rounded-md border border-carbon-700 bg-carbon-850/60 hover:border-carbon-600 transition-colors">
           <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b border-carbon-700/40">
             <h2 class="text-base font-semibold text-syntax-text">
               {entry.data.title}

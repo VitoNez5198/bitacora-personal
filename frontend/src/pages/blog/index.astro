@@ -27,7 +27,7 @@ const sortedBlog = blogEntries.sort(
     {sortedBlog.map((post) => {
       const formattedDate = post.data.publishDate.toISOString().split('T')[0];
       return (
-        <article class="p-5 rounded-md border border-carbon-700 bg-carbon-850/40 hover:bg-carbon-850/80 hover:border-carbon-600 transition-all group">
+        <article class="p-4 sm:p-5 rounded-md border border-carbon-700 bg-carbon-850/40 hover:bg-carbon-850/80 hover:border-carbon-600 transition-all group">
           <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
             <h2 class="text-base font-medium text-syntax-text group-hover:text-syntax-accent transition-colors">
               <a href={`/blog/${post.slug}`}>
