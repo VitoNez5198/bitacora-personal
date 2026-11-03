@@ -8,3 +8,4 @@ link: "https://github.com/VitoNez5198/bitacora-personal"
 ---
 
 Herramienta personal que conecta un bot de Telegram con la API multimodal de Gemini para transcribir notas de voz, estructurarlas en Markdown y sincronizarlas automáticamente con este jardín digital.
+

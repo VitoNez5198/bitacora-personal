@@ -10,3 +10,4 @@ Por más de un siglo se creyó que todos los grandes terópodos eran exclusivame
 Sin embargo, descubrimientos recientes en Marruecos revelaron que el **Spinosaurus aegyptiacus** tenía una cola en forma de aleta ancha parecida a la de un tritón y huesos de densidad ósea similar a la de los pingüinos. 
 
 Era un coloso que dominaba los deltas fluviales del Cretácico, convirtiéndose en el primer dinosaurio gigante no aviar adaptado a la natación y caza acuática confirmado por la paleontología moderna.
+

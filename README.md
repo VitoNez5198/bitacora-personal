@@ -1,75 +1,60 @@
-# Bitácora Personal & Jardín Digital
+# Bitácora Personal & Jardín Digital 🌿
 
-Bitácora técnica modular con estética de terminal y minimalismo funcional. Cero clichés visuales de IA, optimizada para rendimiento extremo (0 KB de JavaScript innecesario) y portabilidad mediante texto plano en Git.
+Un jardín digital y bitácora personal modular con estética de terminal sobria, minimalismo funcional y enfoque en **divulgación, curiosidades, ciencia, historia y pasatiempos**. 
+
+Cero clichés visuales de IA, 0 KB de JavaScript innecesario y contenido 100% en texto plano versionado en Git.
 
 ---
 
-## 🏗️ Arquitectura
+## 🏛️ Estructura de Secciones
 
 ```
 proyecto_blog/
-├── frontend/                 # Astro + Tailwind CSS (Generación estática)
+├── frontend/
 │   ├── src/
-│   │   ├── content/          # Colecciones tipadas (Markdown + Frontmatter)
-│   │   │   ├── til/          # / (Stream de notas rápidas y TIL)
-│   │   │   ├── blog/         # /blog (Ensayos largos y reflexiones)
-│   │   │   ├── lab/          # /lab (Experimentos, proyectos, scripts)
-│   │   │   └── hobbies/      # /hobbies (Gaming, coleccionismo, Pokémon)
-│   │   ├── layouts/          # BaseLayout con estilo de prompt shell
-│   │   └── styles/           # global.css (paleta carbón, acentos consola)
+│   │   ├── content/
+│   │   │   ├── notas/          # [~/notas] (/) Apuntes rápidos, trucos, ideas y TILs
+│   │   │   ├── historias/      # [~/historias] (/historias) Crónicas y relatos en profundidad
+│   │   │   ├── curiosidades/   # [~/curiosidades] (/curiosidades) Hechos insólitos, dinosaurios y ciencia
+│   │   │   └── rincon/         # [~/rincon] (/rincon) Pokémon TCG, pasatiempos y scripts personales
+│   │   ├── layouts/
+│   │   │   └── BaseLayout.astro # Shell con terminal prompt header y responsive móvil
+│   │   └── styles/
+│   │       └── global.css      # Paleta carbón (#0a0c10), acentos consola y tipografía
 │   └── astro.config.mjs
 │
-├── backend/                  # FastAPI (Automatización e ingesta)
+├── backend/
 │   ├── app/
-│   │   ├── api/ingest.py     # Endpoint para guardar notas TIL directamente
-│   │   └── main.py           # Servidor API
+│   │   ├── telegram_bot.py     # Bot @BlogVitobot con Gemini multimodal (audio & texto)
+│   │   ├── api/ingest.py       # API REST de ingesta
+│   │   └── main.py             # Servidor FastAPI
 │   └── requirements.txt
 └── README.md
 ```
 
 ---
 
-## 🎨 Filosofía de Diseño
+## 🎙️ Ingesta por Voz desde el Móvil (Telegram Bot)
 
-- **Paleta Dark Mode Sobria:** Fondo carbón pizarra (`#0a0c10`), superficies en `#0f1217`, bordes sutiles en `#212631`.
-- **Acentos Funcionales:** Verde consola (`#3fb950`) para estado nominal/TIL, ámbar vintage (`#d29922`) para proyectos en desarrollo.
-- **Tipografía:** `JetBrains Mono` / `Geist Mono` para metadatos, tags y código; sans-serif limpia y geométrica para lectura de artículos.
-
----
-
-## 🚀 Puesta en Marcha
-
-### Opción A: Desde WSL (Linux / Ubuntu en Bash)
-
-#### 1. Frontend (Astro)
-```bash
-cd /mnt/d/Proyectos/proyecto_blog/frontend
-npm run dev
-```
-> Disponible en: `http://localhost:4321`
-
-#### 2. Backend de Ingesta (FastAPI)
-```bash
-cd /mnt/d/Proyectos/proyecto_blog/backend
-source .venv/bin/activate
-uvicorn app.main:app --reload --port 8000
-```
-> Swagger Docs: `http://localhost:8000/docs`
-> Endpoint de Ingesta: `POST http://localhost:8000/api/ingest/til`
+El repositorio incluye un bot privado en Telegram (**`@BlogVitobot`**) conectado a la API de **Gemini**:
+1. Envías una nota de voz o texto al bot con cualquier idea, anécdota o hecho curioso.
+2. Gemini escucha el audio, complementa los datos históricos/científicos faltantes (fact-checking), y redacta la entrada en Markdown limpio.
+3. El bot guarda automáticamente el archivo en la colección que corresponde y ejecuta `git commit & push` a GitHub `main`.
 
 ---
 
-### Opción B: Desde Windows PowerShell
+## 🚀 Puesta en Marcha en Local
 
-#### 1. Frontend (Astro)
+### 1. Frontend (Astro)
 ```powershell
-cd d:\Proyectos\proyecto_blog\frontend
-npm run dev
+cd frontend
+npm run dev -- --host 0.0.0.0
 ```
+> En tu PC: `http://localhost:4321`  
+> En tu móvil (mismo Wi-Fi): `http://192.168.4.42:4321`
 
-#### 2. Backend (FastAPI)
+### 2. Bot de Telegram & Backend (FastAPI)
 ```powershell
-cd d:\Proyectos\proyecto_blog\backend
-.\venv\Scripts\activate
-uvicorn app.main:app --reload --port 8000
+cd backend
+.\venv\Scripts\python.exe -u app\telegram_bot.py
 ```
