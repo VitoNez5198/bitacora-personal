@@ -43,21 +43,21 @@ SUPERPODER DE INVESTIGACIÓN Y FACT-CHECKING:
 
 DIRECTRICES DE CLASIFICACIÓN Y COLECCIÓN:
 1. Elige la colección adecuada:
-   - "til": Aprendizajes rápidos, datos insólitos, pequeñas curiosidades o trucos del día a día (Today I Learned).
-   - "blog": Ensayos, crónicas desarrolladas, divulgación profunda (historia, ciencia, naturaleza, sociedad, etc.).
-   - "lab": Notas de campo, proyectos, experimentos de código, prototipos o herramientas.
-   - "hobbies": Pokémon, gaming, coleccionismo, consolas y pasatiempos.
+   - "notas": Apuntes rápidos, trucos de programación, ideas del día, TIL (Today I Learned) o citas breves.
+   - "historias": Crónicas largas, relatos desarrollados y divulgación en profundidad (historia, ciencia, dinosaurios, naturaleza, sociedad, etc.).
+   - "curiosidades": Datos insólitos, hechos fascinantes, rarezas de la ciencia o del mundo que sorprenden.
+   - "rincon": Tu espacio personal y geek (proyectos/scripts propios, cartas Pokémon TCG, pasatiempos, gaming casual o colecciones).
 
 2. CERO clichés de IA: nada de frases vacías ("En este fascinante post...", "Bienvenidos...", "En conclusión..."). Prohibido el tono corporativo o de marketing; usa el tono de un divulgador curioso, ameno y riguroso.
 
 3. Devuelve ÚNICAMENTE un objeto JSON válido con los siguientes campos:
    - "title": Título atractivo y claro (sin comillas dobles internas).
-   - "collection": "til" | "blog" | "lab" | "hobbies"
-   - "tags": Lista de 2 a 4 tags en minúsculas y sin '#' (ej: ["historia", "botanica", "chile"]).
+   - "collection": "notas" | "historias" | "curiosidades" | "rincon"
+   - "tags": Lista de 2 a 4 tags en minúsculas y sin '#' (ej: ["historia", "botanica", "chile"] o ["python", "terminal"]).
    - "snippet": Resumen de una sola frase (máximo 120 caracteres).
    - "content": Contenido completo en Markdown limpio. Si aplica código, usa bloques ```.
-   - "topic": (Solo si collection es "blog") Uno de: "historia" | "ciencia" | "naturaleza" | "sociedad" | "cultura" | "tecnología" | "tecno-política" | "gaming" | "general".
-   - "category": (Solo si collection es "hobbies") Uno de: "pokemon" | "gaming" | "hardware" | "coleccionismo" | "curiosidades".
+   - "topic": (Solo si collection es "historias") Uno de: "historia" | "ciencia" | "naturaleza" | "sociedad" | "cultura" | "tecnología" | "tecno-política" | "gaming" | "general".
+   - "type": (Solo si collection es "rincon") Uno de: "proyecto" | "tcg" | "gaming" | "coleccion" | "setup" | "general".
 """
 
 def slugify(text: str) -> str:
@@ -104,9 +104,9 @@ def process_with_gemini(audio_bytes: bytes | None = None, text_content: str | No
     raise RuntimeError(f"Error procesando con Gemini: {last_err}")
 
 def save_and_commit(entry: dict) -> tuple[str, str]:
-    collection = entry.get("collection", "til")
-    if collection not in ["til", "blog", "lab", "hobbies"]:
-        collection = "til"
+    collection = entry.get("collection", "notas")
+    if collection not in ["notas", "historias", "curiosidades", "rincon"]:
+        collection = "notas"
 
     target_dir = CONTENT_DIR / collection
     target_dir.mkdir(parents=True, exist_ok=True)
@@ -123,19 +123,19 @@ def save_and_commit(entry: dict) -> tuple[str, str]:
     if topic not in valid_topics:
         topic = "general"
 
-    valid_categories = ["pokemon", "gaming", "hardware", "coleccionismo", "curiosidades"]
-    category = entry.get("category", "curiosidades")
-    if category not in valid_categories:
-        category = "curiosidades"
+    valid_types = ["proyecto", "tcg", "gaming", "coleccion", "setup", "general"]
+    item_type = entry.get("type", "general")
+    if item_type not in valid_types:
+        item_type = "general"
 
-    if collection == "til":
+    if collection == "notas":
         frontmatter = f"""---
 title: "{entry['title']}"
 publishDate: {date_str}
 tags: [{tags_formatted}]
 snippet: "{entry.get('snippet', '')}"
 ---"""
-    elif collection == "blog":
+    elif collection == "historias":
         frontmatter = f"""---
 title: "{entry['title']}"
 description: "{entry.get('snippet', '')}"
@@ -144,19 +144,19 @@ tags: [{tags_formatted}]
 topic: "{topic}"
 draft: false
 ---"""
-    elif collection == "lab":
+    elif collection == "curiosidades":
         frontmatter = f"""---
 title: "{entry['title']}"
-description: "{entry.get('snippet', '')}"
-status: "wip"
-stack: [{tags_formatted}]
-updatedDate: {date_str}
+publishDate: {date_str}
+tags: [{tags_formatted}]
+snippet: "{entry.get('snippet', '')}"
 ---"""
-    else:  # hobbies
+    else:  # rincon
         frontmatter = f"""---
 title: "{entry['title']}"
-category: "{category}"
+type: "{item_type}"
 date: {date_str}
+status: "activo"
 tags: [{tags_formatted}]
 ---"""
 

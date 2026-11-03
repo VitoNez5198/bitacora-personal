@@ -3,40 +3,40 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import '../../styles/global.css';
 
-const blogEntries = await getCollection('blog', ({ data }) => !data.draft);
-const sortedBlog = blogEntries.sort(
+const historiasEntries = await getCollection('historias', ({ data }) => !data.draft);
+const sortedHistorias = historiasEntries.sort(
   (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
 );
 ---
 
-<BaseLayout title="Blog" currentPath="/blog">
-  <section class="mb-10 pb-6 border-b border-carbon-700/60">
+<BaseLayout title="Historias & Crónicas" currentPath="/historias">
+  <section class="mb-8 pb-5 border-b border-carbon-700/60">
     <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs font-mono text-syntax-info font-semibold">[LOGBOOK // ESSAYS]</span>
-      <span class="text-xs font-mono text-syntax-muted">/root/blog</span>
+      <span class="text-xs font-mono text-syntax-info font-semibold">[CRÓNICAS // HISTORIAS]</span>
+      <span class="text-xs font-mono text-syntax-muted">/root/historias</span>
     </div>
     <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-syntax-text">
-      Crónicas, ensayos y divulgación
+      Crónicas, ensayos y relatos
     </h1>
     <p class="mt-2 text-sm text-syntax-muted max-w-2xl font-normal leading-relaxed">
-      Artículos en profundidad sobre historia, ciencia, naturaleza, sociedad, cultura y reflexiones sobre el mundo contemporáneo.
+      Artículos en profundidad sobre historia, ciencia, naturaleza, sociedad, dinosaurios y reflexiones sobre el mundo contemporáneo.
     </p>
   </section>
 
   <div class="space-y-4">
-    {sortedBlog.map((post) => {
+    {sortedHistorias.map((post) => {
       const formattedDate = post.data.publishDate.toISOString().split('T')[0];
       return (
         <article class="p-4 sm:p-5 rounded-md border border-carbon-700 bg-carbon-850/40 hover:bg-carbon-850/80 hover:border-carbon-600 transition-all group">
           <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
             <h2 class="text-base font-medium text-syntax-text group-hover:text-syntax-accent transition-colors">
-              <a href={`/blog/${post.slug}`}>
+              <a href={`/historias/${post.slug}`}>
                 {post.data.title}
               </a>
             </h2>
             <div class="flex items-center gap-2 text-xs font-mono text-syntax-muted shrink-0">
               <span class="px-1.5 py-0.5 rounded bg-carbon-800 border border-carbon-700/60 text-syntax-subtle">
-                {post.data.topic}
+                #{post.data.topic}
               </span>
               <time datetime={post.data.publishDate.toISOString()}>
                 {formattedDate}
@@ -50,11 +50,10 @@ const sortedBlog = blogEntries.sort(
       );
     })}
 
-    {sortedBlog.length === 0 && (
+    {sortedHistorias.length === 0 && (
       <div class="p-8 text-center border border-dashed border-carbon-700 rounded-md font-mono text-xs text-syntax-muted">
-        [!] Ningún ensayo publicado por ahora. Crea un archivo Markdown en <code>src/content/blog/</code> para publicar.
+        [!] Ninguna historia publicada por ahora. Guarda un archivo Markdown en <code>src/content/historias/</code> o díctaselo al bot.
       </div>
     )}
   </div>
 </BaseLayout>
-

@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/global.css';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('historias');
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -16,12 +16,12 @@ const { Content } = await post.render();
 const formattedDate = post.data.publishDate.toISOString().split('T')[0];
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} currentPath="/blog">
+<BaseLayout title={post.data.title} description={post.data.description} currentPath="/historias">
   <article class="max-w-3xl mx-auto">
     <!-- Header del artículo -->
     <header class="mb-6 sm:mb-8 pb-5 sm:pb-6 border-b border-carbon-700/60">
       <div class="flex items-center gap-2 mb-3 text-xs font-mono text-syntax-muted">
-        <a href="/blog" class="hover:text-syntax-text">&larr; ~/blog</a>
+        <a href="/historias" class="hover:text-syntax-text">&larr; ~/historias</a>
         <span>/</span>
         <span class="text-syntax-info">#{post.data.topic}</span>
         <span>•</span>
@@ -54,11 +54,10 @@ const formattedDate = post.data.publishDate.toISOString().split('T')[0];
 
     <!-- Footer del post -->
     <footer class="mt-12 pt-6 border-t border-carbon-700/60 flex justify-between items-center text-xs font-mono text-syntax-muted">
-      <a href="/blog" class="hover:text-syntax-accent transition-colors">
-        &larr; Volver al índice de ensayos
+      <a href="/historias" class="hover:text-syntax-accent transition-colors">
+        &larr; Volver al índice de historias
       </a>
-      <span>bitácora técnica</span>
+      <span>bitácora de divulgación</span>
     </footer>
   </article>
 </BaseLayout>
-

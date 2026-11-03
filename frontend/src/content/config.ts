@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-const tilCollection = defineCollection({
+const notasCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
@@ -10,7 +10,7 @@ const tilCollection = defineCollection({
   }),
 });
 
-const blogCollection = defineCollection({
+const historiasCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
@@ -19,13 +19,11 @@ const blogCollection = defineCollection({
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     topic: z.enum([
-      'ciencia',
       'historia',
+      'ciencia',
       'naturaleza',
       'sociedad',
       'tecnología',
-      'tecno-política',
-      'gaming',
       'cultura',
       'general'
     ]).default('general'),
@@ -33,34 +31,31 @@ const blogCollection = defineCollection({
   }),
 });
 
-const labCollection = defineCollection({
+const curiosidadesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    description: z.string(),
-    status: z.enum(['active', 'prototype', 'wip', 'archived']).default('wip'),
-    stack: z.array(z.string()).default([]),
-    repoUrl: z.string().url().optional(),
-    demoUrl: z.string().url().optional(),
-    updatedDate: z.coerce.date(),
+    publishDate: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+    snippet: z.string().optional(),
   }),
 });
 
-const hobbiesCollection = defineCollection({
+const rinconCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    category: z.enum(['pokemon', 'gaming', 'hardware', 'coleccionismo', 'curiosidades']),
+    type: z.enum(['proyecto', 'tcg', 'gaming', 'coleccion', 'setup', 'general']).default('general'),
     date: z.coerce.date(),
     status: z.string().optional(),
     tags: z.array(z.string()).default([]),
+    link: z.string().url().optional(),
   }),
 });
 
 export const collections = {
-  til: tilCollection,
-  blog: blogCollection,
-  lab: labCollection,
-  hobbies: hobbiesCollection,
+  notas: notasCollection,
+  historias: historiasCollection,
+  curiosidades: curiosidadesCollection,
+  rincon: rinconCollection,
 };
-
