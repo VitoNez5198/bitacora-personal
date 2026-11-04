@@ -23,6 +23,7 @@ const historiasCollection = defineCollection({
       'ciencia',
       'naturaleza',
       'sociedad',
+      'tecno-política',
       'tecnología',
       'cultura',
       'general'
