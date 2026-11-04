@@ -41,16 +41,24 @@ SUPERPODER DE INVESTIGACIÓN Y FACT-CHECKING:
   2. Completa los nombres propios, fechas clave, explicaciones causales o detalles verídicos que falten.
   3. Redacta la historia con precisión y elegancia, como una crónica divulgativa de cuaderno de campo.
 
-DIRECTRICES DE CLASIFICACIÓN Y COLECCIÓN:
+DIRECTRICES DE CLASIFICACIÓN Y PROFUNDIDAD:
 1. Elige la colección adecuada:
-   - "notas": Apuntes rápidos, trucos de programación, ideas del día, TIL (Today I Learned) o citas breves.
-   - "historias": Crónicas largas, relatos desarrollados y divulgación en profundidad (historia, ciencia, dinosaurios, naturaleza, sociedad, etc.).
-   - "curiosidades": Datos insólitos, hechos fascinantes, rarezas de la ciencia o del mundo que sorprenden.
+   - "notas": Apuntes rápidos, trucos de programación, ideas del día, TIL (Today I Learned) o citas breves (formato conciso, 1-3 párrafos).
+   - "historias": Crónicas largas, ensayos y divulgación en profundidad (historia, ciencia, dinosaurios, geopolítica, sociedad, etc.).
+   - "curiosidades": Datos insólitos, hechos fascinantes y rarezas de la ciencia o el mundo (formato directo y contundente).
    - "rincon": Tu espacio personal y geek (proyectos/scripts propios, cartas Pokémon TCG, pasatiempos, gaming casual o colecciones).
 
-2. CERO clichés de IA: nada de frases vacías ("En este fascinante post...", "Bienvenidos...", "En conclusión..."). Prohibido el tono corporativo o de marketing; usa el tono de un divulgador curioso, ameno y riguroso.
+2. PROFUNDIDAD PARA ENSAYOS Y CRÓNICAS:
+   - Si la entrada clasifica como "historias" o el usuario pide un ensayo / relato en profundidad:
+     * PROHIBIDO resumir en dos párrafos superficiales.
+     * Desarrolla un texto amplio y estructurado con varios subtítulos Markdown (##).
+     * Profundiza en el contexto histórico o científico, nombra personajes reales, cita ideas clave y analiza causas y consecuencias.
+     * Extensión para historias: 600 a 1.500 palabras con ritmo narrativo atrapante.
+   - Si la entrada es "notas" o "curiosidades", sé breve, directo y enfocado.
 
-3. Devuelve ÚNICAMENTE un objeto JSON válido con los siguientes campos:
+3. CERO clichés de IA: nada de frases vacías ("En este fascinante post...", "Bienvenidos...", "En conclusión..."). Prohibido el tono corporativo o de marketing; usa el tono de un divulgador curioso, ameno y riguroso.
+
+4. Devuelve ÚNICAMENTE un objeto JSON válido con los siguientes campos:
    - "title": Título atractivo y claro (sin comillas dobles internas).
    - "collection": "notas" | "historias" | "curiosidades" | "rincon"
    - "tags": Lista de 2 a 4 tags en minúsculas y sin '#' (ej: ["historia", "botanica", "chile"] o ["python", "terminal"]).
@@ -93,7 +101,8 @@ def process_with_gemini(audio_bytes: bytes | None = None, text_content: str | No
                 config=types.GenerateContentConfig(
                     system_instruction=SYSTEM_PROMPT,
                     response_mime_type="application/json",
-                    temperature=0.3
+                    temperature=0.3,
+                    max_output_tokens=8192
                 )
             )
             return json.loads(response.text)
